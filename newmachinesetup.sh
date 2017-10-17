@@ -50,7 +50,7 @@ git config --global core.editor vim
 # Python
 #############
 cd ~/Downloads
-wget ~/Downloads https://bootstrap.pypa.io/get-pip.py
+wget -O ~/Downloads/get-pip.py https://bootstrap.pypa.io/get-pip.py
 sudo python3 get-pip.py
 sudo pip install virtualenv virtualenvwrapper
 sudo pip install --user numpy
