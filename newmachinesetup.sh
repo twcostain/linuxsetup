@@ -71,6 +71,12 @@ echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sou
 sudo apt-get update
 sudo apt-get install sublime-text
 
+##########
+# Tmux
+##########
+sudo apt install tmux
+cp tmux.conf ~/.tmux.conf
+
 #################
 # USEFULL THINGS
 #################
