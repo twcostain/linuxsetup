@@ -5,6 +5,11 @@
 
 set -e
 
+# TODO Add switching statement so the script can take flags.
+#       we can make use of a case embedded in a while loop
+#       and also make use of the shift keyword
+
+
 #############
 # BASH SETUP
 #############
@@ -38,7 +43,7 @@ fi
 ###############
 # SSH
 ###############
-ssh-keygen -t rsa -b 4096 -C $(uname -n)
+ssh-keygen -t rsa -b 4096 -C "$(whoami)@$(uname -n)"
 
 ###############
 # GIT
@@ -57,9 +62,10 @@ git config --global core.editor vim
 #############
 wget -O ~/Downloads/get-pip.py https://bootstrap.pypa.io/get-pip.py
 sudo python3 ~/Downloads/get-pip.py
-sudo pip install virtualenv virtualenvwrapper
-sudo pip install --user numpy pandas matplotlib
-pip completion -b >> ~/.profile
+pip3 completion -b >> ~/.profile
+
+sudo pip3 install virtualenv virtualenvwrapper
+pip3 install --user numpy pandas matplotlib
 
 ################
 # Vim

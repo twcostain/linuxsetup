@@ -57,9 +57,9 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='\[\e[01;32m\][\!]\u\[\e[m\]:\[\e[01;34m\]\w\[\e[0m\]\$ '
+    PS1='\[\e[01;32m\][\!]\u@\h\[\e[m\]:\[\e[01;34m\]\w\[\e[0m\]\$ '
 else
-    PS1='[\!]\u:\w\$ '
+    PS1='[\!]\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
 
@@ -120,7 +120,7 @@ fi
 umask 022
 
 #Virtualenvwrapper things
-export VIRTUALENVWRAPPER_PYTHON='/usr/bin/python3'
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Documents
-source /usr/local/bin/virtualenvwrapper.sh
+#export VIRTUALENVWRAPPER_PYTHON='/usr/bin/python3'
+#export WORKON_HOME=$HOME/.virtualenvs
+#export PROJECT_HOME=$HOME/Documents
+#source /usr/local/bin/virtualenvwrapper.sh
