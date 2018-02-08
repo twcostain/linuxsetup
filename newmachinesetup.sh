@@ -5,11 +5,6 @@
 
 set -e
 
-# TODO Add switching statement so the script can take flags.
-#       we can make use of a case embedded in a while loop
-#       and also make use of the shift keyword
-
-
 #############
 # BASH SETUP
 #############
@@ -43,7 +38,9 @@ fi
 ###############
 # SSH
 ###############
-ssh-keygen -t rsa -b 4096 -C "$(whoami)@$(uname -n)"
+if [-f ~/.ssh/id_rsa]; then
+    ssh-keygen -t rsa -b 4096 -C "$(whoami)@$(uname -n)"
+fi
 
 ###############
 # GIT
@@ -74,15 +71,6 @@ git clone --depth=1 git://github.com/amix/vimrc.git ~/.vim_runtime
 sh ~/.vim_runtime/install_awesome_vimrc.sh
 cat $SETUP_DIR/dotfiles/vimrcadditions >> ~/.vim_runtime/vimrcs/basic.vim
 
-###############
-# Sublime Text
-###############
-wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
-sudo apt install apt-transport-https
-echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
-sudo apt update
-sudo apt install sublime-text
-
 ##########
 # Tmux
 ##########
@@ -92,40 +80,6 @@ cp $SETUP_DIR/dotfiles/tmux.conf ~/.tmux.conf
 #################
 # USEFULL THINGS
 #################
-sudo apt install evince tree
+sudo apt install evince tree htop
 
-##################
-# UBUNTU ARCTHEME
-##################
-if [[ `uname -v` == *"Ubuntu"* ]]; then
-    #Theme
-    sudo apt-get install autoconf automake pkg-config libgtk-3-dev gtk2-engine-murrine gnome-tweak-tool
-    cd ~/Downloads
-    git clone https://github.com/horst3180/arc-theme --depth 1
-    cd arc-theme
-    ./autogen.sh --prefix=/usr --disable-light --disable-darker
-    sudo make install
 
-    #Icons
-    cd ~/Downloads
-    git clone https://github.com/horst3180/arc-icon-theme --depth 1 && cd arc-icon-theme
-    ./autogen.sh --prefix=/usr
-    sudo make install
-    sudo add-apt-repository ppa:moka/daily
-    sudo apt-get install moka-icon-theme
-    gnome-tweak-tool
-
-    cd $START_DIR
-fi
-
-##############################
-# Latex - DO LAST/ OVER LUNCH
-##############################
-cd Downloads
-wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
-tar xzvf install-tl-unx.tar.gz
-cd install-tl*
-sudo ./install-tl
-
-cd ~/bin
-wget http://https://raw.githubusercontent.com/aclements/latexrun/master/latexrun
