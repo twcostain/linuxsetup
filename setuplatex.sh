@@ -14,4 +14,4 @@ cd ~/Downloads/install-tl*
 sudo ./install-tl
 
 #Latexun
-wget -O ~/bin/latexrun http://https://raw.githubusercontent.com/aclements/latexrun/master/latexrun
+wget -O ~/bin/latexrun https://raw.githubusercontent.com/aclements/latexrun/master/latexrun
