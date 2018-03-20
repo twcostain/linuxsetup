@@ -69,7 +69,7 @@ pip3 install --user numpy pandas matplotlib
 ################
 git clone --depth=1 git://github.com/amix/vimrc.git ~/.vim_runtime
 sh ~/.vim_runtime/install_awesome_vimrc.sh
-cat $SETUP_DIR/dotfiles/vimrcadditions >> ~/.vim_runtime/vimrcs/basic.vim
+cat $SETUP_DIR/dotfiles/vimrcadditions >> ~/.vim_runtime/my_configs.vim
 
 ##########
 # Tmux
