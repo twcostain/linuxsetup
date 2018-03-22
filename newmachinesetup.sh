@@ -28,7 +28,7 @@ sudo apt install vim git python3
 if [ ! -d ~/Downloads ]; then
     mkdir ~/Downloads
 fi
-if [ ! -d ~/Documents]; then
+if [ ! -d ~/Documents ]; then
     mkdir ~/Documents
 fi
 if [ ! -d ~/bin ]; then
@@ -38,7 +38,7 @@ fi
 ###############
 # SSH
 ###############
-if [-f ~/.ssh/id_rsa]; then
+if [ ! -f ~/.ssh/id_rsa ]; then
     ssh-keygen -t rsa -b 4096 -C "$(whoami)@$(uname -n)"
 fi
 
