@@ -61,8 +61,8 @@ wget -O ~/Downloads/get-pip.py https://bootstrap.pypa.io/get-pip.py
 sudo python3 ~/Downloads/get-pip.py
 pip3 completion -b >> ~/.profile
 
-sudo pip3 install virtualenv virtualenvwrapper
 pip3 install --user numpy pandas matplotlib
+sudo -H pip3 install virtualenv virtualenvwrapper
 
 ################
 # Vim
