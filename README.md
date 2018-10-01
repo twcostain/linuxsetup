@@ -9,3 +9,4 @@ Clone the repo to a folder on the new machine. Then run `newmachinesetup.sh`. Al
   - Add shebangs to all shell files
   - gtk2-engines-murrine
   - moka icon theme ppa change -- https://snwh.org/moka/download
+  - rename gnome-tweaks-tool to gnome-tweaks
