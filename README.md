@@ -10,3 +10,5 @@ Clone the repo to a folder on the new machine. Then run `newmachinesetup.sh`. Al
   - gtk2-engines-murrine
   - moka icon theme ppa change -- https://snwh.org/moka/download
   - rename gnome-tweaks-tool to gnome-tweaks
+  - quote characters for git name
+  - add -H to pip sudo install
