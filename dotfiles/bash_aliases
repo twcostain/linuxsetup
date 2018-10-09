@@ -1,5 +1,5 @@
 #Standard ls alias
-alias lal='ll -A'
+alias lal='ll -a'
 
 #rm Safety
 alias rm='rm -i'
