@@ -57,6 +57,7 @@ git config --global core.editor vim
 #############
 # Python
 #############
+sudo apt install python3-dev
 wget -O ~/Downloads/get-pip.py https://bootstrap.pypa.io/get-pip.py
 sudo python3 ~/Downloads/get-pip.py
 pip3 completion -b >> ~/.profile
