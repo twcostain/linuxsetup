@@ -13,5 +13,7 @@ tar xzvf install-tl-unx.tar.gz
 cd ~/Downloads/install-tl*
 sudo ./install-tl
 
+tlmgr init-usertree
+
 #Latexun
 wget -O ~/bin/latexrun https://raw.githubusercontent.com/aclements/latexrun/master/latexrun
