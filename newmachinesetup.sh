@@ -62,8 +62,7 @@ wget -O ~/Downloads/get-pip.py https://bootstrap.pypa.io/get-pip.py
 sudo python3 ~/Downloads/get-pip.py
 pip3 completion -b >> ~/.profile
 
-pip3 install --user numpy pandas matplotlib
-sudo -H pip3 install virtualenv virtualenvwrapper
+sudo -H pip3 install virtualenv virtualenvwrapper flake8 numpy pandas matplotlib
 
 ################
 # Vim
