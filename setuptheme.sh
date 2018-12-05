@@ -7,7 +7,7 @@ set -e
 SETUP_DIR=$(pwd);
 
 #Theme
-sudo apt-get install autoconf automake pkg-config libgtk-3-dev gtk2-engine-murrine gnome-tweak-tool
+sudo apt-get install autoconf automake pkg-config libgtk-3-dev gtk2-engines-murrine gnome-tweak-tool
 cd ~/Downloads
 git clone https://github.com/horst3180/arc-theme --depth 1
 cd arc-theme
