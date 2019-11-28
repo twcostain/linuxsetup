@@ -12,15 +12,19 @@ PACKAGE_LIST="packages.txt"
 SNAP_LIST="snaps.txt"
 
 # Install desired packages and snaps
-install_packages(){
+install_core_packages(){
     sudo -v # Check that we have sudo permission
     
     echo "Installing packages from packages.txt"
-    local PROGRAMS="$(cat packages.txt)"
+    local PROGRAMS="$(cat core_packages.txt)"
     sudo apt update
     while read PROG; do
         sudo apt -qq install $PROG
     done < $_LIST
+}
+
+install_snaps(){
+    sudo -v #Check that we have sudo permission
 
     echo "Installing packages from snaps.txt"
     local SNAPS="$(cat snaps.txt)"
@@ -29,7 +33,7 @@ install_packages(){
     done < $_LIST
 }
 
-install miniconda(){
+install_miniconda(){
     wget -Lo /tmp/miniconda_install.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
     bash /tmp/miniconda_install.sh
     conda config --set auto_activate_base false
@@ -90,15 +94,24 @@ configure_vim(){
 }
 
 
-main_install_sudo(){
-    install_packages || echo "Installing Packages failed."
+core_install_sudo(){
+    install_core_packages || echo "Installing Packages failed."
 }
 
-main_install_nosudo(){
+install_sudo(){
+    core_install_sudo
+    install_snaps || echo "Installing Snaps failed."
+}
+
+core_install_nosudo(){
     install_miniconda || echo "Installing miniconda failed."
 }
 
-main_configure(){
+install_nosudo(){
+    core_install_nosudo
+}
+
+core_configure(){
     configure_zsh || echo "Failed to configure zsh."
     configure_git || echo "Failed to configure git."
     configure_home || echo "Failed to configure home directory."
@@ -106,10 +119,24 @@ main_configure(){
     configure_tmux || echo "Failed to configure tmux."
 }
 
+configure(){
+    core_configure
+}
+
 main(){
-    main_install_sudo
-    main_install_nosudo
-    main_configure
+    install_sudo
+    install_nosudo
+    configure
+}
+
+headless(){
+    core_install_sudo
+    core_configure
+}
+
+headless_nosudo(){
+    core_install_sudo
+    core_configure
 }
 
 cat install_options.txt
@@ -121,12 +148,20 @@ case $OPTION in
         main
         ;;
     2)
-        main_configure
+        configure
         ;;
     3)
-        install_miniconda
-        main_configure
+        install_miniconda || echo "Installing miniconda failed."
+        configure
+        ;;
+    4)
+        headless
+        ;;
+    5)
+        headless_nosudo
+        ;;
     *)
         echo "Please choose a valid option"
         exit 1
+        ;;
 esac
