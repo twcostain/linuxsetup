@@ -3,11 +3,11 @@
 install_core_packages(){
     set -e
     sudo -v # Check that we have sudo permission
-    
+
     echo "Installing packages from core_packages.txt"
     sudo apt update
     while read PROG; do
-        sudo apt -qq install $PROG
+        sudo apt -qq -y install $PROG
     done < core_packages.txt
     return
 }
@@ -28,7 +28,7 @@ install_miniconda(){
     wget -O /tmp/miniconda_install.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
     bash /tmp/miniconda_install.sh
     conda config --set auto_activate_base false
-    return 
+    return
 }
 
 install_latex(){
@@ -58,7 +58,7 @@ configure_git(){
 configure_zsh(){
     set -e
     if [[ ! -z $(which zsh) ]] && [[ $SHELL != $(which zsh) ]]; then
-        local CUSTOM="~/.oh-my-zsh/custom/"
+        local CUSTOM="~/.oh-my-zsh/custom"
         wget -O /tmp/oh_my_zsh_install.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
         RUNZSH=no sh /tmp/oh_my_zsh_install.sh
         if [[ ! -f $CUSTOM/aliases.zsh ]]; then
@@ -68,8 +68,10 @@ configure_zsh(){
         if [[ ! -f $CUSTOM/rc.zsh ]]; then
             cp $SETUP_DIR/dotfiles/rc.zsh $CUSTOM/rc.zsh
         fi
+        return 0
     else
         echo "Zsh not installed or already SHELL."
+        return 1
     fi
     return
 }
@@ -114,6 +116,9 @@ configure_vscode(){
         while read EXT; do
             code --install-extension $EXT
         done < vscode_extensions.txt
+        return 0
+    else
+        return 1
     fi
     return
 }
