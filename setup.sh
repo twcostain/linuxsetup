@@ -5,7 +5,6 @@
 
 set -e # Don't blindly continue after an error
 
-sudo -v # Check that we have sudo permission
 
 SETUP_DIR=$(pwd);
 
@@ -14,15 +13,17 @@ SNAP_LIST="snaps.txt"
 
 # Install desired packages and snaps
 install_packages(){
+    sudo -v # Check that we have sudo permission
+    
     echo "Installing packages from packages.txt"
-    PROGRAMS="$(cat packages.txt)"
+    local PROGRAMS="$(cat packages.txt)"
     sudo apt update
     while read PROG; do
         sudo apt -qq install $PROG
     done < $_LIST
 
     echo "Installing packages from snaps.txt"
-    SNAPS="$(cat snaps.txt)"
+    local SNAPS="$(cat snaps.txt)"
     while read SNAP; do
         sudo snap install $SNAP
     done < $_LIST
@@ -46,25 +47,34 @@ configure_git(){
 }
 
 configure_zsh(){
-    CUSTOM="~/.oh-my-zsh/custom/"
-    chsh -s $(which zsh)
-    curl -Lo /tmp/oh_my_zsh_install.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
-    sh /tmp/oh_my_zsh_install.sh
-    if [ ! -f $CUSTOM/aliases.zsh]
-    cp $SETUP_DIR/dotfiles/aliases.zsh $CUSTOM/aliases.zsh
+    if [[ ! -z $(which zsh) ]] && [[ $SHELL != $(which zsh) ]]; then
+        local CUSTOM="~/.oh-my-zsh/custom/"
+        chsh -s $(which zsh)
+        curl -Lo /tmp/oh_my_zsh_install.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+        sh /tmp/oh_my_zsh_install.sh
+        if [[! -f $CUSTOM/aliases.zsh ]]; then
+            cp $SETUP_DIR/dotfiles/aliases.zsh $CUSTOM/aliases.zsh
+        fi
+
+        if [[! -f $CUSTOM/rc.zsh ]]; then
+            cp $SETUP_DIR/dotfiles/rc.zsh $CUSTOM/rc.zsh
+        fi
+    else
+        echo "Zsh not installed or already SHELL."
+    fi
 }
 
 gen_ssh_key(){
-    if [ ! -f ~/.ssh/id_ed25519 ]; then
+    if [[ ! -f ~/.ssh/id_ed25519 ]]; then
         ssh-keygen -t ed25519 -C "$(whoami)@$(uname -n)"
     fi
 }
 
 configure_home(){
-    if [ ! -d ~/Downloads ]; then
+    if [[ ! -d ~/Downloads ]]; then
         mkdir ~/Downloads
     fi
-    if [ ! -d ~/bin ]; then
+    if [[ ! -d ~/bin ]]; then
         mkdir ~/bin
     fi
 }
