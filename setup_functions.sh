@@ -141,6 +141,6 @@ headless(){
 }
 
 headless_nosudo(){
-    core_install_sudo
+    core_install_nosudo
     core_configure
 }
