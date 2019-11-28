@@ -1,6 +1,7 @@
 
 # Install desired packages and snaps
 install_core_packages(){
+    set -e
     sudo -v # Check that we have sudo permission
     
     echo "Installing packages from core_packages.txt"
@@ -11,6 +12,7 @@ install_core_packages(){
 }
 
 install_snaps(){
+    set -e
     sudo -v #Check that we have sudo permission
 
     echo "Installing packages from snaps.txt"
@@ -20,12 +22,14 @@ install_snaps(){
 }
 
 install_miniconda(){
+    set -e
     wget -Lo /tmp/miniconda_install.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
     bash /tmp/miniconda_install.sh
     conda config --set auto_activate_base false
 }
 
 install_latex(){
+    set -e
     wget -Lo /tmp/install-tl-unx.tar.gz http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
     tar xzvf install-tl-unx.tar.gz
     cd /tmp/install-tl*
@@ -35,6 +39,7 @@ install_latex(){
 }
 
 configure_git(){
+    set -e
     echo 'Setting global git config'
     echo 'Please enter full name:'
     read FULLNAME
@@ -46,6 +51,7 @@ configure_git(){
 }
 
 configure_zsh(){
+    set -e
     if [[ ! -z $(which zsh) ]] && [[ $SHELL != $(which zsh) ]]; then
         local CUSTOM="~/.oh-my-zsh/custom/"
         chsh -s $(which zsh)
@@ -64,12 +70,14 @@ configure_zsh(){
 }
 
 configure_ssh_key(){
+    set -e
     if [[ ! -f ~/.ssh/id_ed25519 ]]; then
         ssh-keygen -t ed25519 -C "$(whoami)@$(uname -n)"
     fi
 }
 
 configure_home(){
+    set -e
     if [[ ! -d ~/Downloads ]]; then
         mkdir ~/Downloads
     fi
@@ -79,16 +87,19 @@ configure_home(){
 }
 
 configure_tmux(){
+    set -e
     cp $SETUP_DIR/dotfiles/tmux.conf ~/.tmux.conf
 }
 
 configure_vim(){
+    set -e
     git clone --depth=1 git://github.com/amix/vimrc.git ~/.vim_runtime
     sh ~/.vim_runtime/install_awesome_vimrc.sh
     cat $SETUP_DIR/dotfiles/vimrcadditions >> ~/.vim_runtime/my_configs.vim
 }
 
 configure_vscode(){
+    set -e
     if [[ ! -z $(which code) ]];then
         # install extensions
         while read EXT; do
