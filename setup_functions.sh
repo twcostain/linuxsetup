@@ -54,9 +54,8 @@ configure_zsh(){
     set -e
     if [[ ! -z $(which zsh) ]] && [[ $SHELL != $(which zsh) ]]; then
         local CUSTOM="~/.oh-my-zsh/custom/"
-        chsh -s $(which zsh)
         wget -O /tmp/oh_my_zsh_install.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
-        sh /tmp/oh_my_zsh_install.sh
+        RUNZSH=no sh /tmp/oh_my_zsh_install.sh
         if [[ ! -f $CUSTOM/aliases.zsh ]]; then
             cp $SETUP_DIR/dotfiles/aliases.zsh $CUSTOM/aliases.zsh
         fi
