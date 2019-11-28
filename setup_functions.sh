@@ -51,11 +51,11 @@ configure_zsh(){
         chsh -s $(which zsh)
         curl -Lo /tmp/oh_my_zsh_install.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
         sh /tmp/oh_my_zsh_install.sh
-        if [[! -f $CUSTOM/aliases.zsh ]]; then
+        if [[ ! -f $CUSTOM/aliases.zsh ]]; then
             cp $SETUP_DIR/dotfiles/aliases.zsh $CUSTOM/aliases.zsh
         fi
 
-        if [[! -f $CUSTOM/rc.zsh ]]; then
+        if [[ ! -f $CUSTOM/rc.zsh ]]; then
             cp $SETUP_DIR/dotfiles/rc.zsh $CUSTOM/rc.zsh
         fi
     else
