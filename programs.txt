@@ -1,0 +1,10 @@
+zsh
+fonts-powerline
+vim
+git
+python3 python3-dev
+tmux
+tree
+htop
+wget
+curl

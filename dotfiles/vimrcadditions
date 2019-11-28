@@ -1,8 +1,10 @@
 """"""""""""""""""""""""""""""""""""""""
 " Customisations for The Ultimate vimrc
 " https://github.com/amix/vimrc.git
-" by T. Costain (c) 2018
+" by T. Costain (c) 2019
 """"""""""""""""""""""""""""""""""""""""
+
+:let mapleader = " "
 
 set number
 
