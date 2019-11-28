@@ -23,14 +23,14 @@ install_snaps(){
 
 install_miniconda(){
     set -e
-    wget -o /tmp/miniconda_install.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+    wget -O /tmp/miniconda_install.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
     bash /tmp/miniconda_install.sh
     conda config --set auto_activate_base false
 }
 
 install_latex(){
     set -e
-    wget -o /tmp/install-tl-unx.tar.gz http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+    wget -O /tmp/install-tl-unx.tar.gz http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
     tar xzvf install-tl-unx.tar.gz
     cd /tmp/install-tl*
     sudo ./install-tl
@@ -55,7 +55,7 @@ configure_zsh(){
     if [[ ! -z $(which zsh) ]] && [[ $SHELL != $(which zsh) ]]; then
         local CUSTOM="~/.oh-my-zsh/custom/"
         chsh -s $(which zsh)
-        wget -o /tmp/oh_my_zsh_install.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+        wget -O /tmp/oh_my_zsh_install.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
         sh /tmp/oh_my_zsh_install.sh
         if [[ ! -f $CUSTOM/aliases.zsh ]]; then
             cp $SETUP_DIR/dotfiles/aliases.zsh $CUSTOM/aliases.zsh
