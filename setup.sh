@@ -28,6 +28,12 @@ install_packages(){
     done < $_LIST
 }
 
+install miniconda(){
+    wget -Lo /tmp/miniconda_install.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+    bash /tmp/miniconda_install.sh
+    conda config --set auto_activate_base false
+}
+
 configure_git(){
     echo 'Setting global git config'
     echo 'Please enter full name:'
@@ -74,32 +80,43 @@ configure_vim(){
 }
 
 
-main_install(){
-    install_packages || echo "Installing Packages failed. Continuing with configurations"
+main_install_sudo(){
+    install_packages || echo "Installing Packages failed."
+}
+
+main_install_nosudo(){
+    install_miniconda || echo "Installing miniconda failed."
 }
 
 main_configure(){
     configure_zsh || echo "Failed to configure zsh."
+    configure_git || echo "Failed to configure git."
+    configure_home || echo "Failed to configure home directory."
+    configure_vim || echo "Failed to configure vim."
     configure_tmux || echo "Failed to configure tmux."
 }
 
 main(){
-    main_install
+    main_install_sudo
+    main_install_nosudo
     main_configure
 }
 
-read -p "Attempt Installation and configuration" -n 1 -r
-echo    # (optional) move to a new line
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    main
-    exit
-fi
+cat install_options.txt
 
-read -p "Commence configuration only?" -n 1 -r
-echo    # (optional) move to a new line
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    main_configure
-    exit
-fi
+read -p "Choose an option:" -n 1 -r OPTION
+echo
+case $OPTION in
+    1)
+        main
+        ;;
+    2)
+        main_configure
+        ;;
+    3)
+        install_miniconda
+        main_configure
+    *)
+        echo "Please choose a valid option"
+        exit 1
+esac

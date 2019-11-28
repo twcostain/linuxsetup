@@ -1,0 +1,5 @@
+Please choose an installation option:
+
+1) Everything
+2) Config only
+3) Config + Miniconda
