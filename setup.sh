@@ -35,6 +35,9 @@ case $OPTION in
     5)
         headless_nosudo
         ;;
+    6)
+        install_latex
+        ;;
     *)
         echo "Please choose a valid option"
         exit 1

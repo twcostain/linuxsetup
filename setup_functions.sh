@@ -25,6 +25,15 @@ install_miniconda(){
     conda config --set auto_activate_base false
 }
 
+install_latex(){
+    wget -Lo /tmp/install-tl-unx.tar.gz http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+    tar xzvf install-tl-unx.tar.gz
+    cd /tmp/install-tl*
+    sudo ./install-tl
+
+    tlmgr init-usertree
+}
+
 configure_git(){
     echo 'Setting global git config'
     echo 'Please enter full name:'

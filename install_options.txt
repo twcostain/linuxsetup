@@ -5,3 +5,4 @@ Please choose an installation option:
 3) Config + Miniconda
 4) Headless
 5) Headless (no sudo)
+6) LaTeX (separate because download is slow)
