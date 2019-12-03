@@ -4,7 +4,8 @@
 " by T. Costain (c) 2019
 """"""""""""""""""""""""""""""""""""""""
 
-:let mapleader = " "
+let mapleader = " "
+nnoremap <SPACE> <Nop>
 
 set number
 
