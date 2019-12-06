@@ -36,7 +36,7 @@ install_latex(){
     wget -O /tmp/install-tl-unx.tar.gz http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
     tar xzvf install-tl-unx.tar.gz
     cd /tmp/install-tl*
-    sudo ./install-tl
+    ./install-tl
 
     tlmgr init-usertree
     return
