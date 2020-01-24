@@ -26,8 +26,8 @@ case $OPTION in
         configure
         ;;
     3)
-        install_miniconda || echo "Installing miniconda failed."
         configure
+        install_miniconda || echo "Installing miniconda failed."
         ;;
     4)
         headless
