@@ -130,7 +130,7 @@ core_install_nosudo(){
 
 core_install_sudo(){
     install_core_packages || echo "Installing Packages failed."
-    core_install_nosudo()
+    core_install_nosudo
     return
 }
 
