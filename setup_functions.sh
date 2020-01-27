@@ -123,20 +123,20 @@ configure_vscode(){
     return
 }
 
+core_install_nosudo(){
+    install_miniconda || echo "Installing miniconda failed."
+    return
+}
 
 core_install_sudo(){
     install_core_packages || echo "Installing Packages failed."
+    core_install_nosudo()
     return
 }
 
 install_sudo(){
     core_install_sudo
     install_snaps || echo "Installing Snaps failed."
-    return
-}
-
-core_install_nosudo(){
-    install_miniconda || echo "Installing miniconda failed."
     return
 }
 
