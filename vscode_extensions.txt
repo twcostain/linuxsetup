@@ -4,4 +4,5 @@ ms-vscode-remote.remote-ssh
 ms-python.python
 pkief.material-icon-theme
 james-yu.latex-workshop
-
+christian-kohler.path-intellisense
+donjayamanne.githistory
