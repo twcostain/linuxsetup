@@ -60,7 +60,7 @@ configure_git(){
 configure_zsh(){
     set -e
     if [[ ! -z $(which zsh) ]] && [[ $SHELL != $(which zsh) ]]; then
-        local CUSTOM="~/.oh-my-zsh/custom"
+        local CUSTOM=$HOME/.oh-my-zsh/custom
         wget -O /tmp/oh_my_zsh_install.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
         RUNZSH=no sh /tmp/oh_my_zsh_install.sh
         
