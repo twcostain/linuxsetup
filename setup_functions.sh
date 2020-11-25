@@ -63,13 +63,12 @@ configure_zsh(){
         local CUSTOM="~/.oh-my-zsh/custom"
         wget -O /tmp/oh_my_zsh_install.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
         RUNZSH=no sh /tmp/oh_my_zsh_install.sh
+        
+        cp $SETUP_DIR/dotfiles/rc.zsh $HOME/.zshrc
         if [[ ! -f $CUSTOM/aliases.zsh ]]; then
             cp $SETUP_DIR/dotfiles/aliases.zsh $CUSTOM/aliases.zsh
         fi
 
-        if [[ ! -f $CUSTOM/rc.zsh ]]; then
-            cp $SETUP_DIR/dotfiles/rc.zsh $CUSTOM/rc.zsh
-        fi
         return 0
     else
         echo "Zsh not installed or already SHELL."
