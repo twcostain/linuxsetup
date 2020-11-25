@@ -6,3 +6,6 @@ alias lal='ll -a'
 
 #rm Safety
 alias rm='rm -i'
+
+#chown Safety
+alias chown='chown -h'
