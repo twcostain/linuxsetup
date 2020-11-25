@@ -27,8 +27,9 @@ install_snaps(){
 install_miniconda(){
     set -e
     wget -O /tmp/miniconda_install.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-    bash /tmp/miniconda_install.sh
-    conda config --set auto_activate_base false
+    bash /tmp/miniconda_install.sh -b -p $HOME/miniconda3
+    $HOME/miniconda3/bin/conda init zsh
+    $HOME/miniconda3/bin/conda config --set auto_activate_base false
     return
 }
 
