@@ -8,8 +8,6 @@ set -e # Don't blindly continue after an error
 
 source setup_functions.sh
 
-SETUP_DIR=$(pwd);
-
 cat install_options.txt
 
 echo

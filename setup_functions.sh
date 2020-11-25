@@ -1,3 +1,4 @@
+SETUP_DIR=$(pwd);
 
 # Install desired packages and snaps
 install_core_packages(){
