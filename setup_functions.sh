@@ -4,49 +4,17 @@ SETUP_DIR=$(pwd);
 install_core_packages(){
     set -e
     sudo -v # Check that we have sudo permission
-
-    echo "Installing packages from core_packages.txt"
-    sudo apt update
-    while read PROG; do
-        sudo apt -qq -y install $PROG
-    done < core_packages.txt
-    return
-}
-
-install_snaps(){
-    set -e
-    sudo -v #Check that we have sudo permission
-
-    echo "Installing packages from snaps.txt"
-    while read SNAP; do
-        sudo snap install $SNAP
-    done < snaps.txt
-    return
-}
-
-install_miniconda(){
-    set -e
-    wget -O /tmp/miniconda_install.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-    bash /tmp/miniconda_install.sh -b -p $HOME/miniconda3
-    if [[ ! -z $(which zsh) ]]; then
-        $HOME/miniconda3/bin/conda init zsh
-    else
-        $HOME/miniconda3/bin/conda init
+    # check if we have aptitude (i.e. debian or ubuntu system)
+    if [[ ! -z $(which apt) ]]; then
+        echo "Installing packages from core_apt_packages.txt"
+        sudo apt update
+        while read PROG; do
+            sudo apt -qq -y install $PROG
+        done < core_packages.txt
     fi
-    $HOME/miniconda3/bin/conda config --set auto_activate_base false
     return
 }
 
-install_latex(){
-    set -e
-    wget -O /tmp/install-tl-unx.tar.gz http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
-    tar xzvf install-tl-unx.tar.gz
-    cd /tmp/install-tl*
-    ./install-tl
-
-    tlmgr init-usertree
-    return
-}
 
 configure_git(){
     set -e
@@ -58,11 +26,22 @@ configure_git(){
     read GITEMAIL
     git config --global user.email $GITEMAIL
     git config --global core.editor vim
+    # New git config improvements
+    git config --global branch.sort -committerdate
+    git config --global diff.algorithm histogram
+    git config --global diff.colorMoved plain
+    git config --global diff.renames true
+    git config --global fetch.prune true\ngit config --global fetch.pruneTags true\ngit config --global fetch.all true
+    git config --global help.autocorrect prompt
+    git config --global merge.conflictstyle zdiff3
+    git config --global color.ui auto
+    git config --global alias.l "log --all --decorate --oneline --graph"
     return
 }
 
 configure_zsh(){
     set -e
+    # TODO handle case where zsh installed (i.e. MacOS) but no oh-my-zsh
     if [[ ! -z $(which zsh) ]] && [[ $SHELL != $(which zsh) ]]; then
         local CUSTOM=$HOME/.oh-my-zsh/custom
         wget -O /tmp/oh_my_zsh_install.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
@@ -82,6 +61,7 @@ configure_zsh(){
 }
 
 configure_ssh_key(){
+    # TODO 1password compat?
     set -e
     if [[ ! -f ~/.ssh/id_ed25519 ]]; then
         ssh-keygen -t ed25519 -C "$(whoami)@$(uname -n)"
@@ -111,31 +91,13 @@ configure_vim(){
     git clone --depth=1 git://github.com/amix/vimrc.git ~/.vim_runtime
     sh ~/.vim_runtime/install_awesome_vimrc.sh
     cat $SETUP_DIR/dotfiles/vimrcadditions >> ~/.vim_runtime/my_configs.vim
+    echo "##########\nDONT FORGET TO EDIT BASIC.VIM IF YOU WANT TO CHANGE LEADER!!!!\n##########"
     return
 }
 
-configure_vscode(){
-    set -e
-    if [[ ! -z $(which code) ]];then
-        # install extensions
-        while read EXT; do
-            code --install-extension $EXT
-        done < vscode_extensions.txt
-        return 0
-    else
-        return 1
-    fi
-    return
-}
-
-core_install_nosudo(){
-    install_miniconda || echo "Installing miniconda failed."
-    return
-}
 
 core_install_sudo(){
     install_core_packages || echo "Installing Packages failed."
-    core_install_nosudo
     return
 }
 
@@ -145,10 +107,6 @@ install_sudo(){
     return
 }
 
-install_nosudo(){
-    core_install_nosudo
-    return
-}
 
 core_configure(){
     configure_zsh || echo "Failed to configure zsh."
@@ -162,13 +120,11 @@ core_configure(){
 
 configure(){
     core_configure
-    configure_vscode || echo "Failed to configure vscode."
     return
 }
 
 main(){
     install_sudo
-    install_nosudo
     configure
     return
 }
@@ -180,7 +136,6 @@ headless(){
 }
 
 headless_nosudo(){
-    core_install_nosudo
     core_configure
     return
 }

@@ -24,17 +24,10 @@ case $OPTION in
         configure
         ;;
     3)
-        configure
-        install_miniconda || echo "Installing miniconda failed."
-        ;;
-    4)
         headless
         ;;
-    5)
+    4)
         headless_nosudo
-        ;;
-    6)
-        install_latex
         ;;
     *)
         echo "Please choose a valid option"
