@@ -41,7 +41,6 @@ configure_git(){
 
 configure_zsh(){
     set -e
-    # TODO handle case where zsh installed (i.e. MacOS) but no oh-my-zsh
     if [[ ! -z $(which zsh) ]] && [[ $SHELL != $(which zsh) ]]; then
         local CUSTOM=$HOME/.oh-my-zsh/custom
         wget -O /tmp/oh_my_zsh_install.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
@@ -53,6 +52,15 @@ configure_zsh(){
         fi
 
         return 0
+    elif [[ $SHELL == $(which zsh) ]] && [[ ! -d $HOME/.oh-my-zsh ]]; then
+        local CUSTOM=$HOME/.oh-my-zsh/custom
+        wget -O /tmp/oh_my_zsh_install.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+        RUNZSH=no sh /tmp/oh_my_zsh_install.sh
+        
+        cp $SETUP_DIR/dotfiles/rc.zsh $HOME/.zshrc
+        if [[ ! -f $CUSTOM/aliases.zsh ]]; then
+            cp $SETUP_DIR/dotfiles/aliases.zsh $CUSTOM/aliases.zsh
+        fi
     else
         echo "Zsh not installed or already SHELL."
         return 1
@@ -74,9 +82,6 @@ configure_home(){
     if [[ ! -d ~/Downloads ]]; then
         mkdir ~/Downloads
     fi
-    if [[ ! -d ~/bin ]]; then
-        mkdir ~/bin
-    fi
     return
 }
 
@@ -88,7 +93,7 @@ configure_tmux(){
 
 configure_vim(){
     set -e
-    git clone --depth=1 git://github.com/amix/vimrc.git ~/.vim_runtime
+    git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime
     sh ~/.vim_runtime/install_awesome_vimrc.sh
     cat $SETUP_DIR/dotfiles/vimrcadditions >> ~/.vim_runtime/my_configs.vim
     echo "##########\nDONT FORGET TO EDIT BASIC.VIM IF YOU WANT TO CHANGE LEADER!!!!\n##########"
